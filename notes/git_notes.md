@@ -6,6 +6,10 @@ This file is a comprehensive cheat sheet for Git, tailored for our project. Use 
 Git is a distributed version control system created by Linus Torvalds in 2005 for Linux development. It tracks changes in code, enables collaboration, and allows branching for safe experimentation. Who uses it? Virtually all tech companies (Google, Microsoft, Amazon) and open-source projects (e.g., Python itself on GitHub). Career note: Git proficiency is essential for devs – entry-level roles expect it, seniors use advanced features like rebasing. Wages boost with GitHub portfolio (beginner +10-20k, senior managers oversee Git workflows for teams).
 
 ## Common Git Commands
+
+# See what Git thinks is tracked on your local main branch
+git ls-tree -r main --name-only
+
 # Initialize a new repo (do this once per project)
 git init
 
