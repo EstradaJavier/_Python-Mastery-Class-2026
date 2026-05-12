@@ -183,7 +183,7 @@ def create_profile(use_input=False):
     A tuple is a collection of values returned together.
     """
     name = "Javier"
-    eye_color = "green"
+    eye_color = "Hazel"
     blood_type = "O-"
     is_married = True
     spouse_name = "Alesha Estrada"
