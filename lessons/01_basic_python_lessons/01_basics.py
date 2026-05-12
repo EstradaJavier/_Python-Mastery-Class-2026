@@ -186,7 +186,7 @@ def create_profile(use_input=False):
     eye_color = "green"
     blood_type = "O-"
     is_married = True
-    spouse_name = "Alesha"
+    spouse_name = "Alesha Estrada"
 
     # Height stored in feet and inches because that is familiar to many beginners.
     height_feet = 5
