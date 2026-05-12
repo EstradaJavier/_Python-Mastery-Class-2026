@@ -69,8 +69,9 @@ if __name__ == "__main__":
     # Run FizzBuzz
     fizzbuzz(max_number)
 
+
     # Closing Message
     print("\n" + "-" * 60)
     print(f"{user_name}, have a great {day_of_week}, {formatted_date}! 🚀")
-    print("See you next time for more Python fun!")
+    print(f"See you next time for more Python fun, {user_name}!")
     print("-" * 60)
