@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced PyScript Demo</title>
+  <!--
+    advanced_pyscript.html
+
+    This version is more robust than a very simple demo.
+    It is designed like a learning mini-lesson for beginner coders who are
+    ready to move from basic data structures into slightly richer examples.
+
+    Main topics:
+    - Lists
+    - Nested lists
+    - Dictionaries
+    - Functions
+    - Classes
+    - Linked lists
+    - HTML table generation
+    - Interactive browser-side Python
+  -->
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.4.1/core.css" />
+  <script type="module" src="https://pyscript.net/releases/2024.4.1/core.js"></script>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --accent: #1d4ed8;
+      --accent-soft: #dbeafe;
+      --border: #cbd5e1;
+      --success: #166534;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 2rem 1.25rem;
+    }
+
+    main {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    .hero-text { max-width: 780px; }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .muted { color: var(--muted); }
+
+    .lesson-tag {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: #1e3a8a;
+      padding: 0.3rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 0.92rem;
+    }
+
+    code { font-family: Menlo, Monaco, Consolas, monospace; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: var(--accent-soft); }
+
+    .output-box {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 0.9rem;
+      background: #f8fafc;
+      min-height: 80px;
+    }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      background: #eff6ff;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+    }
+
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .success {
+      color: var(--success);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero-text">
+      <div class="hero-badge">Intermediate beginner learning page</div>
+      <h1>advanced_pyscript.html</h1>
+      <p>
+        This page builds from beginner ideas into slightly more advanced ones.
+        It teaches with examples instead of just showing code blocks.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>How to study this page</h2>
+      <p class="muted">
+        Start at the top, read the comments, compare the HTML containers to the Python code,
+        and then change values one section at a time. That is one of the best ways to learn.
+      </p>
+      <div class="note">
+        Good practice: after you understand one section, rename variables, add new items,
+        and refresh the browser to see what changes.
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="lesson-tag">Lesson 1</div>
+        <h2>List output</h2>
+        <p class="muted">A regular Python list shown as HTML bullets.</p>
+        <div id="python-list-output" class="output-box"></div>
+      </article>
+
+      <article class="card">
+        <div class="lesson-tag">Lesson 2</div>
+        <h2>Nested list summary</h2>
+        <p class="muted">Lists can also store grouped data inside other lists.</p>
+        <div id="nested-list-output" class="output-box"></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="lesson-tag">Lesson 3</div>
+        <h2>Function example</h2>
+        <p class="muted">Functions let you reuse logic with different values.</p>
+        <div id="function-output" class="output-box"></div>
+      </article>
+
+      <article class="card">
+        <div class="lesson-tag">Lesson 4</div>
+        <h2>Dictionary output</h2>
+        <p class="muted">Dictionaries give names to values.</p>
+        <div id="dictionary-output" class="output-box"></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="lesson-tag">Lesson 5</div>
+        <h2>Linked list output</h2>
+        <p class="muted">A simple class-based data structure example.</p>
+        <div id="linked-list-output" class="output-box"></div>
+      </article>
+
+      <article class="card">
+        <div class="lesson-tag">Lesson 6</div>
+        <h2>Table from Python data</h2>
+        <p class="muted">Turn dictionaries into a table for clean display.</p>
+        <div id="table-output"></div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="lesson-tag">Lesson 7</div>
+        <h2>Class example</h2>
+        <p class="muted">A class can model a real thing with data and behavior.</p>
+        <div id="class-output" class="output-box"></div>
+      </article>
+
+      <article class="card">
+        <div class="lesson-tag">Lesson 8</div>
+        <h2>Interactive challenge</h2>
+        <p class="muted">Click to generate a small study challenge for a learner.</p>
+        <button py-click="generate_challenge">Generate challenge</button>
+        <div id="challenge-output" class="output-box" style="margin-top: 1rem;"></div>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Code review example</h2>
+<pre>
+# Function example
+def multiply(a, b):
+    return a * b
+
+result = multiply(6, 7)
+</pre>
+      <p class="success">
+        The sections above are meant to be edited by students so they can learn through changes.
+      </p>
+    </section>
+
+    <script type="py">
+from random import choice
+from pyscript.web import page
+
+# ------------------------------------------------------------
+# Lesson 1: List example
+# ------------------------------------------------------------
+python_topics = [
+    "Variables",
+    "Lists",
+    "Functions",
+    "Dictionaries",
+    "Classes",
+    "Loops"
+]
+list_items_html = "".join(f"<li>{topic}</li>" for topic in python_topics)
+page["#python-list-output"].html = f"<ul>{list_items_html}</ul>"
+
+# ------------------------------------------------------------
+# Lesson 2: Nested list example
+# ------------------------------------------------------------
+weekly_plan = [
+    ["Monday", "Variables and strings"],
+    ["Tuesday", "Lists and loops"],
+    ["Wednesday", "Functions and return values"],
+    ["Thursday", "Dictionaries and tables"]
+]
+
+nested_html = "<ol>"
+for item in weekly_plan:
+    nested_html += f"<li><strong>{item[0]}:</strong> {item[1]}</li>"
+nested_html += "</ol>"
+page["#nested-list-output"].html = nested_html
+
+# ------------------------------------------------------------
+# Lesson 3: Function example
+# ------------------------------------------------------------
+def build_grade_message(name, score):
+    return f"{name} scored {score}. Keep practicing and improving."
+
+messages = [
+    build_grade_message("Javier", 92),
+    build_grade_message("Ana", 88),
+    build_grade_message("Leo", 95)
+]
+page["#function-output"].html = "<ul>" + "".join(f"<li>{msg}</li>" for msg in messages) + "</ul>"
+
+# ------------------------------------------------------------
+# Lesson 4: Dictionary example
+# ------------------------------------------------------------
+project_info = {
+    "Project": "PyScript Learning Demo",
+    "Editor": "IntelliJ",
+    "Purpose": "Learn Python inside HTML",
+    "Level": "Beginner to intermediate"
+}
+dict_html = "".join(f"<li><strong>{k}:</strong> {v}</li>" for k, v in project_info.items())
+page["#dictionary-output"].html = f"<ul>{dict_html}</ul>"
+
+# ------------------------------------------------------------
+# Lesson 5: Linked list example
+# ------------------------------------------------------------
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, value):
+        new_node = Node(value)
+        if self.head is None:
+            self.head = new_node
+            return
+        current = self.head
+        while current.next is not None:
+            current = current.next
+        current.next = new_node
+
+    def to_list(self):
+        values = []
+        current = self.head
+        while current is not None:
+            values.append(current.value)
+            current = current.next
+        return values
+
+lesson_chain = LinkedList()
+lesson_chain.append("Create Node")
+lesson_chain.append("Set Head")
+lesson_chain.append("Append New Node")
+lesson_chain.append("Traverse List")
+
+linked_values = lesson_chain.to_list()
+page["#linked-list-output"].html = "<ol>" + "".join(f"<li>{item}</li>" for item in linked_values) + "</ol>"
+
+# ------------------------------------------------------------
+# Lesson 6: Table example
+# ------------------------------------------------------------
+student_data = [
+    {"topic": "Lists", "difficulty": "Beginner", "practice": "Create a shopping list"},
+    {"topic": "Loops", "difficulty": "Beginner", "practice": "Print numbers 1 to 10"},
+    {"topic": "Functions", "difficulty": "Beginner", "practice": "Write an add function"},
+    {"topic": "Linked Lists", "difficulty": "Intermediate", "practice": "Trace node connections"}
+]
+
+rows_html = ""
+for row in student_data:
+    rows_html += f"""
+    <tr>
+      <td>{row['topic']}</td>
+      <td>{row['difficulty']}</td>
+      <td>{row['practice']}</td>
+    </tr>
+    """
+
+page["#table-output"].html = f"""
+<table>
+  <thead>
+    <tr>
+      <th>Topic</th>
+      <th>Difficulty</th>
+      <th>Practice Task</th>
+    </tr>
+  </thead>
+  <tbody>
+    {rows_html}
+  </tbody>
+</table>
+"""
+
+# ------------------------------------------------------------
+# Lesson 7: Class example
+# ------------------------------------------------------------
+class Student:
+    def __init__(self, name, focus_area):
+        self.name = name
+        self.focus_area = focus_area
+
+    def introduce(self):
+        return f"My name is {self.name}, and I am studying {self.focus_area}."
+
+students = [
+    Student("Javier", "PyScript"),
+    Student("Maria", "Python basics"),
+    Student("Chris", "HTML and CSS")
+]
+
+page["#class-output"].html = "<ul>" + "".join(f"<li>{student.introduce()}</li>" for student in students) + "</ul>"
+
+# ------------------------------------------------------------
+# Lesson 8: Interactive challenge
+# ------------------------------------------------------------
+def generate_challenge(event=None):
+    prompts = [
+        "Add a new item to the python_topics list.",
+        "Change one student's name in the class example.",
+        "Add Friday to the weekly plan nested list.",
+        "Insert a new row into the student_data table.",
+        "Modify the linked list to include one more node."
+    ]
+    prompt = choice(prompts)
+    page["#challenge-output"].html = f"<p><strong>Today's coding challenge:</strong> {prompt}</p>"
+    </script>
+  </main>
+</body>
+</html>

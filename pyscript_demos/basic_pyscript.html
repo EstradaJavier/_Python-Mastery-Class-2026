@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic PyScript Learning Page</title>
+
+    <!--
+      basic_pyscript.html
+
+      Purpose:
+      - Teach beginner Python concepts inside an HTML page.
+      - Show how PyScript lets Python update the browser.
+      - Give students many small examples they can edit safely.
+
+      This page uses:
+      - PyScript core.css
+      - PyScript core.js
+      - <script type="py">
+      - from js import document
+    -->
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.4.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.4.1/core.js"></script>
+
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #475569;
+            --border: #cbd5e1;
+            --accent: #0f766e;
+            --accent-soft: #ccfbf1;
+            --accent-dark: #115e59;
+            --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(180deg, #eefbf9 0%, var(--bg) 100%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: #042f2e;
+            color: white;
+            padding: 2rem 1.25rem;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.15);
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .step {
+            display: inline-block;
+            background: var(--accent-soft);
+            color: #134e4a;
+            padding: 0.25rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.65rem;
+        }
+
+        .output {
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            background: #f8fafc;
+            padding: 0.9rem;
+            min-height: 90px;
+            margin-top: 0.75rem;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-size: 0.92rem;
+        }
+
+        code {
+            font-family: Menlo, Monaco, Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.75rem;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--accent-soft);
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background: var(--accent-dark);
+        }
+
+        .note {
+            border-left: 4px solid var(--accent);
+            background: #f0fdfa;
+            padding: 0.9rem 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        ul, ol {
+            margin: 0.5rem 0 0.5rem 1.25rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="badge">Beginner PyScript learning page</div>
+    <h1>basic_pyscript.html</h1>
+    <p>
+        This page is designed for beginner coders. It starts simple, then builds up
+        through variables, strings, math, lists, loops, conditions, dictionaries,
+        functions, tables, and small interactive examples.
+    </p>
+</header>
+
+<main>
+    <section class="card">
+        <h2>How to use this page</h2>
+        <p class="muted">
+            Read one section at a time. Then open the Python code at the bottom,
+            change a value, save the file, refresh the browser, and see what changes.
+        </p>
+        <div class="note">
+            Best practice: make one small edit at a time so you can clearly see
+            what each change does.
+        </div>
+    </section>
+
+    <section class="grid">
+        <article class="card">
+            <div class="step">Step 1</div>
+            <h2>Hello from Python</h2>
+            <p class="muted">Your first browser-based Python message.</p>
+            <div id="hello-output" class="output"></div>
+        </article>
+
+        <article class="card">
+            <div class="step">Step 2</div>
+            <h2>Variables and math</h2>
+            <p class="muted">Store values and calculate with them.</p>
+            <div id="math-output" class="output"></div>
+        </article>
+    </section>
+
+    <section class="grid">
+        <article class="card">
+            <div class="step">Step 3</div>
+            <h2>Strings</h2>
+            <p class="muted">Strings store text and can be combined.</p>
+            <div id="string-output" class="output"></div>
+        </article>
+
+        <article class="card">
+            <div class="step">Step 4</div>
+            <h2>Lists and bullets</h2>
+            <p class="muted">Lists are ordered collections of items.</p>
+            <div id="list-output" class="output"></div>
+        </article>
+    </section>
+
+    <section class="grid">
+        <article class="card">
+            <div class="step">Step 5</div>
+            <h2>Loops</h2>
+            <p class="muted">Loops repeat actions for many items.</p>
+            <div id="loop-output" class="output"></div>
+        </article>
+
+        <article class="card">
+            <div class="step">Step 6</div>
+            <h2>Conditions</h2>
+            <p class="muted">Use if statements to make decisions.</p>
+            <div id="condition-output" class="output"></div>
+        </article>
+    </section>
+
+    <section class="grid">
+        <article class="card">
+            <div class="step">Step 7</div>
+            <h2>Dictionaries</h2>
+            <p class="muted">Dictionaries store key-value pairs.</p>
+            <div id="dict-output" class="output"></div>
+        </article>
+
+        <article class="card">
+            <div class="step">Step 8</div>
+            <h2>Functions</h2>
+            <p class="muted">Functions help you reuse logic.</p>
+            <div id="function-output" class="output"></div>
+        </article>
+    </section>
+
+    <section class="grid">
+        <article class="card">
+            <div class="step">Step 9</div>
+            <h2>List comprehension</h2>
+            <p class="muted">A compact way to build lists.</p>
+            <div id="comprehension-output" class="output"></div>
+        </article>
+
+        <article class="card">
+            <div class="step">Step 10</div>
+            <h2>Table from Python data</h2>
+            <p class="muted">Turn structured Python data into HTML.</p>
+            <div id="table-output"></div>
+        </article>
+    </section>
+
+    <section class="card">
+        <div class="step">Step 11</div>
+        <h2>Interactive beginner practice</h2>
+        <p class="muted">
+            Click the buttons below to let Python create practice ideas and review notes.
+        </p>
+        <button py-click="show_checklist">Show practice checklist</button>
+        <button py-click="show_vocab">Show Python vocabulary</button>
+        <button py-click="show_tip">Show study tip</button>
+        <div id="interactive-output" class="output"></div>
+    </section>
+
+    <section class="card">
+        <h2>Starter code sample</h2>
+        <pre>
+# Beginner list example
+topics = ["variables", "lists", "loops"]
+
+for topic in topics:
+    print(topic)
+</pre>
+        <p class="muted">
+            In PyScript, instead of sending output to a normal terminal,
+            we often place the results into HTML areas on the page.
+        </p>
+    </section>
+
+    <script type="py">
+        from js import document
+        from random import choice
+
+        # ------------------------------------------------------------
+        # Helper function
+        # ------------------------------------------------------------
+        # This helper makes it easier to update HTML sections by id.
+        def write_output(element_id, html):
+            document.getElementById(element_id).innerHTML = html
+
+
+        # ------------------------------------------------------------
+        # Step 1: Hello from Python
+        # ------------------------------------------------------------
+        student_name = "Beginner Coder"
+        course_name = "PyScript Basics"
+
+        write_output(
+            "hello-output",
+            f"<p>Hello, {student_name}! Welcome to <strong>{course_name}</strong>.</p>"
+        )
+
+
+        # ------------------------------------------------------------
+        # Step 2: Variables and math
+        # ------------------------------------------------------------
+        price = 15
+        quantity = 3
+        subtotal = price * quantity
+        tax = 2
+        total = subtotal + tax
+
+        write_output(
+            "math-output",
+            f"""
+            <ul>
+              <li>price = {price}</li>
+              <li>quantity = {quantity}</li>
+              <li>subtotal = price * quantity = {subtotal}</li>
+              <li>tax = {tax}</li>
+              <li>total = subtotal + tax = {total}</li>
+            </ul>
+            """
+        )
+
+
+        # ------------------------------------------------------------
+        # Step 3: Strings
+        # ------------------------------------------------------------
+        first_name = "Javier"
+        last_name = "Estrada"
+        full_name = first_name + " " + last_name
+        message = f"{full_name} is learning Python in the browser."
+
+        write_output(
+            "string-output",
+            f"""
+            <ul>
+              <li>first_name = "{first_name}"</li>
+              <li>last_name = "{last_name}"</li>
+              <li>full_name = "{full_name}"</li>
+              <li>Message: {message}</li>
+            </ul>
+            """
+        )
+
+
+        # ------------------------------------------------------------
+        # Step 4: Lists and bullets
+        # ------------------------------------------------------------
+        python_skills = [
+            "variables",
+            "strings",
+            "lists",
+            "loops",
+            "conditions",
+            "functions",
+            "dictionaries"
+        ]
+
+        list_html = "".join(f"<li>{skill.title()}</li>" for skill in python_skills)
+        write_output("list-output", f"<ul>{list_html}</ul>")
+
+
+        # ------------------------------------------------------------
+        # Step 5: Loops
+        # ------------------------------------------------------------
+        loop_items = []
+        for number in range(1, 6):
+            loop_items.append(f"<li>Loop round number {number}</li>")
+
+        write_output("loop-output", f"<ol>{''.join(loop_items)}</ol>")
+
+
+        # ------------------------------------------------------------
+        # Step 6: Conditions
+        # ------------------------------------------------------------
+        score = 87
+
+        if score >= 90:
+            result_message = "Excellent work."
+        elif score >= 80:
+            result_message = "Great job. Keep going."
+        elif score >= 70:
+            result_message = "Good effort. Practice more."
+        else:
+            result_message = "Keep studying and try again."
+
+        write_output(
+            "condition-output",
+            f"""
+            <ul>
+              <li>score = {score}</li>
+              <li>Result: {result_message}</li>
+            </ul>
+            """
+        )
+
+
+        # ------------------------------------------------------------
+        # Step 7: Dictionaries
+        # ------------------------------------------------------------
+        student_profile = {
+            "name": "Javier",
+            "editor": "IntelliJ",
+            "language": "Python",
+            "goal": "Learn PyScript and web basics"
+        }
+
+        dict_lines = "".join(
+            f"<li><strong>{key.title()}:</strong> {value}</li>"
+            for key, value in student_profile.items()
+        )
+
+        write_output("dict-output", f"<ul>{dict_lines}</ul>")
+
+
+        # ------------------------------------------------------------
+        # Step 8: Functions
+        # ------------------------------------------------------------
+        def multiply(a, b):
+            return a * b
+
+        def build_greeting(name):
+            return f"Keep practicing, {name}!"
+
+        result_one = multiply(6, 7)
+        result_two = build_greeting("Javier")
+
+        write_output(
+            "function-output",
+            f"""
+            <ul>
+              <li>multiply(6, 7) = {result_one}</li>
+              <li>build_greeting("Javier") = {result_two}</li>
+            </ul>
+            """
+        )
+
+
+        # ------------------------------------------------------------
+        # Step 9: List comprehension
+        # ------------------------------------------------------------
+        squares = [number * number for number in range(1, 6)]
+
+        write_output(
+            "comprehension-output",
+            "<p>Squares from 1 to 5:</p><ul>" +
+            "".join(f"<li>{value}</li>" for value in squares) +
+            "</ul>"
+        )
+
+
+        # ------------------------------------------------------------
+        # Step 10: Table from Python data
+        # ------------------------------------------------------------
+        lessons = [
+            {"lesson": "Variables", "focus": "Store values", "example": "age = 25"},
+            {"lesson": "Lists", "focus": "Store many items", "example": "[1, 2, 3]"},
+            {"lesson": "Loops", "focus": "Repeat actions", "example": "for item in items"},
+            {"lesson": "Conditions", "focus": "Make decisions", "example": "if score > 80"},
+            {"lesson": "Functions", "focus": "Reuse code", "example": "def add(a, b):"}
+        ]
+
+        rows = ""
+        for lesson in lessons:
+            rows += f"""
+            <tr>
+              <td>{lesson['lesson']}</td>
+              <td>{lesson['focus']}</td>
+              <td>{lesson['example']}</td>
+            </tr>
+            """
+
+        write_output(
+            "table-output",
+            f"""
+            <table>
+              <thead>
+                <tr>
+                  <th>Lesson</th>
+                  <th>Focus</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows}
+              </tbody>
+            </table>
+            """
+        )
+
+
+        # ------------------------------------------------------------
+        # Step 11: Interactive beginner practice
+        # ------------------------------------------------------------
+        def show_checklist(event=None):
+            tasks = [
+                "Change the value of score and refresh the page.",
+                "Add one new skill to the python_skills list.",
+                "Update the student_profile dictionary with a new key.",
+                "Add one more lesson to the table.",
+                "Change the name in the string example."
+            ]
+            task_html = "".join(f"<li>{task}</li>" for task in tasks)
+            write_output("interactive-output", f"<h3>Practice Checklist</h3><ul>{task_html}</ul>")
+
+        def show_vocab(event=None):
+            vocab = {
+                "Variable": "A name that stores a value.",
+                "List": "An ordered collection of items.",
+                "Loop": "A way to repeat steps.",
+                "Dictionary": "A collection of key-value pairs.",
+                "Function": "Reusable code that performs a task."
+            }
+
+            vocab_html = "".join(
+                f"<li><strong>{term}:</strong> {meaning}</li>"
+                for term, meaning in vocab.items()
+            )
+            write_output("interactive-output", f"<h3>Python Vocabulary</h3><ul>{vocab_html}</ul>")
+
+        def show_tip(event=None):
+            tips = [
+                "Change one line at a time so you know what caused the result.",
+                "Read error messages slowly. They usually point to the problem.",
+                "Practice by editing examples instead of only reading them.",
+                "Use meaningful variable names to make code easier to understand.",
+                "Refresh the browser after saving changes in IntelliJ."
+            ]
+            chosen_tip = choice(tips)
+            write_output(
+                "interactive-output",
+                f"<h3>Study Tip</h3><p>{chosen_tip}</p>"
+            )
+    </script>
+</main>
+</body>
+</html>
